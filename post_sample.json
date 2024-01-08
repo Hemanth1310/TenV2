@@ -1,0 +1,34 @@
+{
+    "user":[
+        {
+            "name":"Nicolas Ruiz",
+            "posts":[
+                {
+                    "Title":"My Best Peruvian ceviche recipe",
+                    "Description":"Begin by cutting white fish into bite-sized cubes and marinate them in a mixture of lime juice, minced garlic, hot peppers, salt, and pepper. Allow the fish to cook in the lime juice for about 20-30 minutes. Add thinly sliced red onion and chopped cilantro to the marinated fish, creating a refreshing and aromatic blend. Serve the ceviche on a bed of crisp lettuce leaves, accompanied by slices of boiled sweet potato and corn on the cob for a satisfying meal. The result is a light, tangy, and flavorful Peruvian Ceviche that perfectly balances the freshness of the ocean with the zing of citrus and the richness of complementary ingredients. Enjoy this dish immediately to savor its exquisite taste and texture.",
+                    "Date":"05/01/2024"
+                },{
+
+                    "Title":"I Made an APP",
+                    "Description":"I made my first app which i made in react native",
+                    "Date":"08/01/2024"
+                }
+            ]
+        },{
+            "name":"Disha Mukre",
+            "posts":[
+                {
+                    "Title":"Look here i can see a sun ",
+                    "Description":"Im in spain and i can see a sun and its 15 degrees here",
+                    "Date":"05/01/2024"
+                },{
+
+                    "Title":"I Made an APP",
+                    "Description":"I made my first app which i made in react native",
+                    "Date":"08/01/2024"
+                }
+            ]
+        }
+    ]
+
+}
