@@ -1,25 +1,52 @@
 import {  StyleSheet, Text, View, Image, Pressable,Alert, Modal } from "react-native";
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 
 function Post_container(){
     const [modalVisible, setModalVisible] = useState(false);
-    const [isLoading, setLoading] = useState(false);
-    const [users, setUsers] = useState([]);
-    getUsers = () => {
-        fetch('https://tenv1-44bcb-default-rtdb.firebaseio.com/user.json')
-          .then((response) => response.json())
-          .then((json) => setUsers(json))
-          .catch((error) => console.error(error))
-          .finally(() => setLoading(false));
-    }
-    useEffect(() => {
-        setLoading(true);
-        getUsers();
-    }, []);
-    
   return (
     <View style={styles.container}>
+           <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+          <View style={styles.postimage}>
+        <Image
+          style={styles.postpic}
+          source={require("../assets/ceiviche.png")}
+        ></Image>
+      </View>
+      <View style={styles.postdescription}>
+        <Text style={styles.description} >
+          Begin by cutting white fish into bite-sized cubes and marinate them in
+          a mixture of lime juice, minced garlic, hot peppers, salt, and pepper.
+          Allow the fish to "cook" in the lime juice for about 20-30 minutes.
+          Add thinly sliced red onion and chopped cilantro to the marinated
+          fish, creating a refreshing and aromatic blend. Serve the ceviche on a
+          bed of crisp lettuce leaves, accompanied by slices of boiled sweet
+          potato and corn on the cob for a satisfying meal. The result is a
+          light, tangy, and flavorful Peruvian Ceviche that perfectly balances
+          the freshness of the ocean with the zing of citrus and the richness of
+          complementary ingredients. Enjoy this dish immediately to savor its
+          exquisite taste and texture.
+        </Text>
+      </View>
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setModalVisible(!modalVisible)}
+            >
+              <Text style={styles.textStyle}>Hide Modal</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
       <View style={styles.userinfo}>
         <View style={styles.profilepic}>
           <Image
@@ -28,8 +55,8 @@ function Post_container(){
           ></Image>
         </View>
         <View style={styles.namendate}>
-          <Text style={styles.username}>{users[0].userName}</Text>
-          <Text style={styles.date}>{users[0].posts[0].date}</Text>
+          <Text style={styles.username}>Nicolas Ruiz</Text>
+          <Text style={styles.date}>5 Jan</Text>
         </View>
         <View style={styles.actions}>
           <Pressable>
@@ -38,16 +65,14 @@ function Post_container(){
           <Image source={require("../assets/3dots.png")}></Image>
         </View>
       </View>
-
+      <View style={styles.postimage}>
+        <Image
+          style={styles.postpic}
+          source={require("../assets/ceiviche.png")}
+        ></Image>
+      </View>
       <View style={styles.postdescription}>
-        <View style={styles.postimage}>
-          <Image
-            style={styles.postpic}
-            source={{ uri: users[0].posts[0].postImage }}
-          ></Image>
-        </View>
-        <Text style={styles.postTitle}>{users[0].posts[0].title}</Text>
-        <Text style={styles.description}>
+        <Text style={styles.description} numberOfLines={10}>
           Begin by cutting white fish into bite-sized cubes and marinate them in
           a mixture of lime juice, minced garlic, hot peppers, salt, and pepper.
           Allow the fish to "cook" in the lime juice for about 20-30 minutes.
@@ -69,6 +94,7 @@ function Post_container(){
           ></Image>
         </Pressable>
       </View>
+   
     </View>
   );
 }
@@ -126,11 +152,9 @@ const styles = StyleSheet.create({
     },
     postpic:{
      
-        
+        width: 330,
         height: 248,
-        resizeMode:'cover'
-
-        
+        borderRadius:10
     },
     image:{
         height:60,
@@ -147,22 +171,14 @@ const styles = StyleSheet.create({
     },
     postdescription:{
 
-        paddingRight:10,
-        paddingLeft:10,
+        paddingHorizontal:30,
         marginBottom:10
-    },
-    postTitle:{
-        fontSize:16,
-        fontWeight: 'bold',
-        color:"#ffffff",
-        marginBottom:10,
-
     },
     description:{
         color:"#ffffff",
-        fontSize:14,
+        fontSize:16,
         textAlign:"justify",
- 
+        
     },
     
     expand:{
@@ -178,7 +194,51 @@ const styles = StyleSheet.create({
         backgroundColor:"#CED704",
         borderRadius:30,
     },
-    
+    centeredView: {
+        flex: 1,
+        height:"100%",
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop:0,
+        
+      },
+      modalView: {
+        flwx:1,
+        height:"100%",
+        paddingTop:35,
+       backgroundColor:'#211C13',
+        borderRadius: 20,
+       marginTop:10,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+      },
+      button: {
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2,
+      },
+      buttonOpen: {
+        backgroundColor: '#F194FF',
+      },
+      buttonClose: {
+        backgroundColor: '#2196F3',
+      },
+      textStyle: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+      },
+      modalText: {
+        marginBottom: 15,
+        textAlign: 'center',
+      },
 })
 
 

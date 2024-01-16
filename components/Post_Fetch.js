@@ -1,35 +1,36 @@
 import {  StyleSheet, Text, View, Image, Pressable,Alert, Modal } from "react-native";
 import React, { useEffect, useState } from 'react';
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
+import { useCallback } from 'react';
 
+SplashScreen.preventAutoHideAsync();
 
-function Post_container(){
-    const [modalVisible, setModalVisible] = useState(false);
-    const [isLoading, setLoading] = useState(false);
-    const [users, setUsers] = useState([]);
-    getUsers = () => {
-        fetch('https://tenv1-44bcb-default-rtdb.firebaseio.com/user.json')
-          .then((response) => response.json())
-          .then((json) => setUsers(json))
-          .catch((error) => console.error(error))
-          .finally(() => setLoading(false));
-    }
-    useEffect(() => {
-        setLoading(true);
-        getUsers();
-    }, []);
+function Post_Fetch(props) {
+    const [fontsLoaded] = useFonts({
+        'Raleway-VariableFont': require('../assets/fonts/Raleway-semibold.ttf'),
+        'Raleway-VariableFont-Bold': require('../assets/fonts/Raleway-Bold.ttf'),
+      });
     
+      const onLayoutRootView = useCallback(async () => {
+        if (fontsLoaded) {
+          await SplashScreen.hideAsync();
+        }
+      }, [fontsLoaded]);
+    
+      if (!fontsLoaded) {
+        return null;
+      }
+
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onLayout={onLayoutRootView}>
       <View style={styles.userinfo}>
         <View style={styles.profilepic}>
-          <Image
-            style={styles.image}
-            source={require("../assets/nicolas.jpeg")}
-          ></Image>
+          <Image style={styles.image} source={{ uri: props.propic }}></Image>
         </View>
         <View style={styles.namendate}>
-          <Text style={styles.username}>{users[0].userName}</Text>
-          <Text style={styles.date}>{users[0].posts[0].date}</Text>
+          <Text style={styles.username}>{props.userName}</Text>
+          <Text style={styles.date}>{props.date}</Text>
         </View>
         <View style={styles.actions}>
           <Pressable>
@@ -43,31 +44,11 @@ function Post_container(){
         <View style={styles.postimage}>
           <Image
             style={styles.postpic}
-            source={{ uri: users[0].posts[0].postImage }}
+            source={{ uri: props.postImage }}
           ></Image>
         </View>
-        <Text style={styles.postTitle}>{users[0].posts[0].title}</Text>
-        <Text style={styles.description}>
-          Begin by cutting white fish into bite-sized cubes and marinate them in
-          a mixture of lime juice, minced garlic, hot peppers, salt, and pepper.
-          Allow the fish to "cook" in the lime juice for about 20-30 minutes.
-          Add thinly sliced red onion and chopped cilantro to the marinated
-          fish, creating a refreshing and aromatic blend. Serve the ceviche on a
-          bed of crisp lettuce leaves, accompanied by slices of boiled sweet
-          potato and corn on the cob for a satisfying meal. The result is a
-          light, tangy, and flavorful Peruvian Ceviche that perfectly balances
-          the freshness of the ocean with the zing of citrus and the richness of
-          complementary ingredients. Enjoy this dish immediately to savor its
-          exquisite taste and texture.
-        </Text>
-      </View>
-      <View style={styles.expandDiv}>
-        <Pressable onPress={() => setModalVisible(true)}>
-          <Image
-            style={styles.expand}
-            source={require("../assets/expand.png")}
-          ></Image>
-        </Pressable>
+        <Text style={styles.postTitle}>{props.title}</Text>
+        <Text style={styles.description}>{props.description}</Text>
       </View>
     </View>
   );
@@ -76,7 +57,7 @@ function Post_container(){
 const styles = StyleSheet.create({
     container:{
         flexDirection:"column",
-        alignItems:"center"
+        // alignItems:"center"
     },
     userinfo:{
         height:60,
@@ -107,12 +88,14 @@ const styles = StyleSheet.create({
     username:{
         fontSize:16,
         color:"#ffffff",
+        fontFamily:"Raleway-VariableFont-Bold",
         // marginHorizontal:10,
         
     },
     date:{
         fontSize:14,
-        color:"#929899"
+        color:"#929899",
+
     },
     actions:{
         alignItems:"center",
@@ -122,14 +105,15 @@ const styles = StyleSheet.create({
     },
     unfollow:{
         color:"#ffffff",
-        marginHorizontal:30
+        marginHorizontal:30,
+        fontFamily:"Raleway-VariableFont-Bold",
     },
     postpic:{
      
         
         height: 248,
-        resizeMode:'cover'
-
+        resizeMode:'contain',
+        width:"100%"
         
     },
     image:{
@@ -153,16 +137,19 @@ const styles = StyleSheet.create({
     },
     postTitle:{
         fontSize:16,
-        fontWeight: 'bold',
+        // fontWeight: 'bold',
         color:"#ffffff",
         marginBottom:10,
-
+        fontFamily:"Raleway-VariableFont-Bold",
+        paddingHorizontal:10,
+      
     },
     description:{
         color:"#ffffff",
         fontSize:14,
         textAlign:"justify",
- 
+        paddingHorizontal:10,
+        fontFamily:"Raleway-VariableFont"
     },
     
     expand:{
@@ -182,4 +169,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default Post_container
+export default Post_Fetch

@@ -35,13 +35,13 @@ const styles = StyleSheet.create({
         color:"#ffffff",
         fontSize:18,
         borderColor:"#ffffff",
-        borderWidth:2,
+        borderBottomWidth:2,
         padding:10,
         width:177,
         borderRadius:8,
         justifyContent:"center"
     }
-    
+
 });
 
 export default Tabs

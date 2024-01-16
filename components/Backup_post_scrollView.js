@@ -1,25 +1,12 @@
 import {  StyleSheet, Text, View, Image, Pressable,Alert, Modal } from "react-native";
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 
 function Post_container(){
     const [modalVisible, setModalVisible] = useState(false);
-    const [isLoading, setLoading] = useState(false);
-    const [users, setUsers] = useState([]);
-    getUsers = () => {
-        fetch('https://tenv1-44bcb-default-rtdb.firebaseio.com/user.json')
-          .then((response) => response.json())
-          .then((json) => setUsers(json))
-          .catch((error) => console.error(error))
-          .finally(() => setLoading(false));
-    }
-    useEffect(() => {
-        setLoading(true);
-        getUsers();
-    }, []);
-    
   return (
     <View style={styles.container}>
+        
       <View style={styles.userinfo}>
         <View style={styles.profilepic}>
           <Image
@@ -28,8 +15,8 @@ function Post_container(){
           ></Image>
         </View>
         <View style={styles.namendate}>
-          <Text style={styles.username}>{users[0].userName}</Text>
-          <Text style={styles.date}>{users[0].posts[0].date}</Text>
+          <Text style={styles.username}>Nicolas Ruiz</Text>
+          <Text style={styles.date}>5 Jan</Text>
         </View>
         <View style={styles.actions}>
           <Pressable>
@@ -38,16 +25,14 @@ function Post_container(){
           <Image source={require("../assets/3dots.png")}></Image>
         </View>
       </View>
-
+      <View style={styles.postimage}>
+        <Image
+          style={styles.postpic}
+          source={require("../assets/ceiviche.png")}
+        ></Image>
+      </View>
       <View style={styles.postdescription}>
-        <View style={styles.postimage}>
-          <Image
-            style={styles.postpic}
-            source={{ uri: users[0].posts[0].postImage }}
-          ></Image>
-        </View>
-        <Text style={styles.postTitle}>{users[0].posts[0].title}</Text>
-        <Text style={styles.description}>
+        <Text style={styles.description} >
           Begin by cutting white fish into bite-sized cubes and marinate them in
           a mixture of lime juice, minced garlic, hot peppers, salt, and pepper.
           Allow the fish to "cook" in the lime juice for about 20-30 minutes.
@@ -69,6 +54,7 @@ function Post_container(){
           ></Image>
         </Pressable>
       </View>
+   
     </View>
   );
 }
@@ -126,11 +112,9 @@ const styles = StyleSheet.create({
     },
     postpic:{
      
-        
+        width: 330,
         height: 248,
-        resizeMode:'cover'
-
-        
+        borderRadius:10
     },
     image:{
         height:60,
@@ -147,22 +131,14 @@ const styles = StyleSheet.create({
     },
     postdescription:{
 
-        paddingRight:10,
-        paddingLeft:10,
+        paddingHorizontal:30,
         marginBottom:10
-    },
-    postTitle:{
-        fontSize:16,
-        fontWeight: 'bold',
-        color:"#ffffff",
-        marginBottom:10,
-
     },
     description:{
         color:"#ffffff",
-        fontSize:14,
+        fontSize:16,
         textAlign:"justify",
- 
+        
     },
     
     expand:{
