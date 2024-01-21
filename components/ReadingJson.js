@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity,StyleSheet, Button,Pressable,Image } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity,StyleSheet, Button,Pressable,Image, Modal, ToastAndroid,Alert } from 'react-native';
 // import Checker from './Checker';
 import Post_Fetch from './Post_Fetch';
 import { LinearGradient } from 'expo-linear-gradient';
+import NotInterested from './NotInterested';
+import ReactionsPopUp from './ReactionPopUp';
+
 
 const ReadingJson = props => {
     const [isLoading, setLoading] = useState(false);
     const [users, setUsers] = useState([]);
     const [couter,setCounter] = useState([0]);
-    
+    const [store,setStore] = useState([0]);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [reactComponent,setReactComponent] =useState(false);
+    const [skipVisible,setSkipVisible]=useState(false);
+    const [skipMessage,setSkipMessage]=useState([]);
 
     getUsers = () => {
         fetch('https://tenv1-44bcb-default-rtdb.firebaseio.com/user.json')
@@ -22,18 +29,100 @@ const ReadingJson = props => {
         getUsers();
     }, []);
 
-    function onNext(index) {
-      setCounter(index);
+    const deadend = () =>{
+        Alert.alert('You’ve exhausted your skips!')
     }
 
-    // function onNext(){
-    //     console.log("im here now");
-    // }
+    function onNext(index) {
+      setCounter(index);
+      setReactComponent(!reactComponent)
+    }
+
+    const boxer = () => {
+        return(
+            <View style={styles.box}>
+                            <Pressable onPress={() => onNext(index + 1)}>
+
+                            <Text>Hello</Text>
+                            </Pressable>
+
+                          </View>
+        )
+    }
+
+    const boxView = () =>{
+        // console.log("clicked")
+        setReactComponent(!reactComponent)
+    }
+    const delay = ms => new Promise(res => setTimeout(res, ms));
+
+      async function onNotinterested(index,prestore){
+        setCounter(index);
+        let x= parseInt(prestore)
+
+        if (x==5)
+        {
+            setStore(0)
+            deadend()
+        }
+        else{
+
+            // ToastAndroid.show(`You have ${4-x} skips left`, ToastAndroid.SHORT);
+            setSkipVisible(true)
+            setSkipMessage(`You have ${4-x} skips left`)
+            await delay(2000);
+            console.log("Waited 5 s")
+            setSkipVisible(false)
+            x++;
+            let y= String(x)
+            setStore(y)
+
+        }
+
+
+    }
+
+
+    const skipable = () =>{
+        return (
+          <View style={styles.skips}>
+            <Text style={styles.skipText}>
+              {skipMessage}
+            </Text>
+          </View>
+        );
+    }
+
+    const showAlert = () =>
+  Alert.alert(
+    'Please Note',
+    'This function is disabled at the moment',
+    [
+      {
+        text: 'Cancel',
+        // onPress: () => Alert.alert('Cancel Pressed'),
+        style: 'cancel',
+      },
+    ],
+    {
+      cancelable: true,
+    //   onDismiss: () =>
+    //     Alert.alert(
+    //       'This alert was dismissed by tapping outside of the alert dialog.',
+    //     ),
+    },
+  );
+
+
     
     return (
       <View>
-        {/* <Text> {users[0].userName}</Text> */}
         <View style={styles.container} key={Math.random().toString()}>
+           {skipVisible == true ?   <View style={styles.skips}>
+            <Text style={styles.skipText}>
+            {skipMessage}
+            </Text>
+          </View>:null}
           {/* {isLoading ? <Text>Loading...</Text> :
             (
                 <FlatList
@@ -48,46 +137,74 @@ const ReadingJson = props => {
           {users.map((data, index) => (
             <View style={styles.postdescription} key={Math.random().toString()}>
               {couter == index ? (
-
                 <View style={styles.postcard}>
                   <View style={styles.poset_section}>
-                  <Post_Fetch
-                    userName={data.userName}
-                    date={data.posts[0].date}
-                    propic={data.profilePicture}
-                    title={data.posts[0].title}
-                    description={data.posts[0].postDrescription}
-                    postImage={data.posts[0].postImage}
-                    onNext={onNext}
-                    
-                  ></Post_Fetch>
+                    <Post_Fetch
+                      userName={data.userName}
+                      date={data.posts[0].date}
+                      propic={data.profilePicture}
+                      title={data.posts[0].title}
+                      description={data.posts[0].postDrescription}
+                      postImage={data.posts[0].postImage}
+                      tag={data.posts[0].category}
+                      onNext={onNext}
+                      unfo={showAlert}
+                    ></Post_Fetch>
                   </View>
                   <View style={styles.expandDiv}>
                     <View style={styles.savelater}>
-                      <Pressable >
-                        {/* <Text>Checker</Text> */}
+                      <Pressable onPress={showAlert}>
+                        <View style={styles.saveSection}>
+                          <Image
+                            style={styles.fakesave}
+                            source={require("../assets/FakeSave.png")}
+                          ></Image>
+                        </View>
+                      </Pressable>
+                      <Pressable onPress={showAlert}>
+                        <View style={styles.fakeReportSection}>
+                          <Image
+                            style={styles.fakereport}
+                            source={require("../assets/Report.png")}
+                          ></Image>
+                        </View>
                       </Pressable>
                     </View>
                     <View style={styles.bottomtabs}>
-                      <View style={styles.interested}>  
-                      <Pressable onPress={() => onNext(index + 1)}>
-                        <Image
-                          style={styles.reactions}
-                          source={require("../assets/smiley3.png")}
-                        ></Image>
-                      </Pressable>
-                      
-                      <Pressable onPress={() => onNext(index + 1)}>
-                        <Image
-                          style={styles.reactions}
-                          source={require("../assets/comments.png")}
-                        ></Image>
-                      </Pressable>
+                      <View style={styles.interested}>
+                        <View style={{ position: "relative" }}>
+                          {/* <Pressable onPress={() => onNext(index + 1)}> */}
+
+                         {/* { reactComponent == true ?(
+                         <View style={styles.outer}>
+                            {boxer}
+                          </View>):null
+                            } */}
+                            {reactComponent == true ? <ReactionsPopUp moveOn={()=>onNext(index + 1)}></ReactionsPopUp> :null}
+                           
+                          <Pressable onPress={boxView}>
+                            <Image
+                              style={styles.reactions}
+                              source={require("../assets/FakeSmile.png")}
+                            ></Image>
+                          </Pressable>
+                        </View>
+                        <Pressable onPress={showAlert}>
+                          <Image
+                            style={styles.reactions}
+                            source={require("../assets/FakeComments.png")}
+                          ></Image>
+                        </Pressable>
                       </View>
                       <View style={styles.notinterested}>
-                                <View style={styles.ignore}>
-                                <Text style={styles.description}>Not Interested</Text>
-                                </View>
+                        <View></View>
+                        <Pressable
+                          onPress={() => onNotinterested(index + 1, store)}
+                        >
+                          <View style={styles.ignore}>
+                            <NotInterested></NotInterested>
+                          </View>
+                        </Pressable>
                       </View>
                     </View>
                   </View>
@@ -101,84 +218,123 @@ const ReadingJson = props => {
 };
 
 
-const styles= StyleSheet.create({
-    container:{
-        flex:1,
-        //  alignItems:"center",
-        color:"#ffffff",
-        // justifyContent:"center",
-        flexDirection:"column",
-        paddingTop:10
-    },   
-    postdescription:{
-
-        // paddingRight:10,
-        // paddingLeft:10,
-        // marginBottom:10
-    }, 
-    description:{
-        color:"#ffffff",
-        fontSize:14,
-        textAlign:"justify",
-        
-    },
-    postcard:{
-        flexDirection:"column",
-         
-        // justifyContent:"flex-end",
-
-    },
-    reactions:{
-        height:30,
-        width:30,
-        resizeMode: 'contain',
-    },
-    poset_section:{
-        
-    },
-    expandDiv:{
-        // flexDirection:"column",
-        justifyContent:"flex-end",
-        // borderWidth:2,
-        height:120,
-    },
-    bottomtabs:{
-        // flex:1,
-        // borderWidth:2,
-        height:60,
+const styles = StyleSheet.create({
+    skips:{
+        position:"absolute",
+        height:45,
         width:"100%",
-        // padding:10,
-        flexDirection:"row",
+        backgroundColor:"#4B6CB7",
+        zIndex:100,
+        top:500,
         alignItems:"center",
-        // justifyContent:"space-between",
-        // backgroundColor:"linear-gradient(180deg, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.10) 100%);",
-        
+        justifyContent:"center",
+        borderRadius:30
     },
-    interested:{
-        flex:1,
-        // borderWidth:2,
-        flexDirection:"row",
-        justifyContent:"space-around",
-        // paddingLeft:10,
-      
+    skipText:{
+        fontSize:16,
+        color:"#ffffff"
     },
-    
-    ignore:{
+    outer:{
+        position:"absolute",
+        top:-100,
+        height:100,
+        width:100,
+        backgroundColor:"red",
+     },
+     box:{
+        height:100,
+        width:100,
+        backgroundColor:"red",
        
-        backgroundColor:"#6C24FF",
-        padding:5,
-        borderRadius:15
-        
-    },
-    notinterested:{
-        flex:1,
-        alignItems:"flex-end",
-        padding:10,
-    },
-    savelater:{
-        // height:"90%",
-    }
-    
-})
+     },
+  container: {
+    flex: 1,
+    //  alignItems:"center",
+    // color:"#182848",
+    // justifyContent:"center",
+    flexDirection: "column",
+    paddingTop: 10,
+    // backgroundColor:'#ffffff'
+  },
+  postdescription: {
+    // paddingRight:10,
+    // paddingLeft:10,
+    // marginBottom:10
+  },
+  
+  postcard: {
+    flexDirection: "column",
+
+    // justifyContent:"flex-end",
+  },
+  savelater: {
+    // height:"90%",
+    flexDirection: "row",
+    alignItems: "space-between",
+    justifyContent: "flex-end",
+    paddingHorizontal: 15,
+    marginBottom:10,
+  },
+  saveSection: {
+    marginHorizontal: 10,
+  },
+  fakesave: {
+    height: 20,
+    width: 20,
+    resizeMode: "contain",
+    // marginLeft:10
+  },
+  fakeReportSection: {
+    marginHorizontal: 10,
+  },
+  fakereport: {
+    height: 20,
+    width: 20,
+    resizeMode: "contain",
+  },
+  reactions: {
+    height: 52,
+    width: 52,
+    resizeMode: "contain",
+  },
+  poset_section: {},
+  expandDiv: {
+    // flexDirection:"column",
+    justifyContent: "flex-end",
+    // borderWidth:2,
+    // height:120,
+  },
+  bottomtabs: {
+    // flex:1,
+    // borderWidth:2,
+    height: 60,
+    width: "100%",
+    // padding:10,
+    flexDirection: "row",
+    alignItems: "center",
+    // justifyContent:"space-between",
+    // backgroundColor:"linear-gradient(180deg, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.10) 100%);",
+  },
+  interested: {
+    flex: 1,
+    // borderWidth:2,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    // paddingLeft:10,
+  },
+
+  ignore: {
+    backgroundColor: "#182848",
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 15,
+  },
+  notinterested: {
+    flex: 1,
+    alignItems: "flex-end",
+    padding: 10,
+  },
+
+});
 
 export default ReadingJson

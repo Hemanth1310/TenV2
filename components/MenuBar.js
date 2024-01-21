@@ -1,18 +1,47 @@
-import {  StyleSheet, Text, View, Image } from "react-native";
+import {  StyleSheet, Text, View, Image, Pressable,Alert } from "react-native";
 
 function MenuBar(){
+
+    const showAlert = () =>
+  Alert.alert(
+    'Please Note',
+    'This function is disabled at the moment',
+    [
+      {
+        text: 'Cancel',
+        
+        style: 'cancel',
+      },
+    ],
+    {
+      cancelable: true,
+   
+    },
+  );
+    
     return(
         <View style={styles.container}>
-            <View>
-            <Image stlye={styles.image} source={require('../assets/burger_menu.png')}></Image>
-            </View>
-            <Text style={styles.appname}>TEN</Text>
-            <View stlye={styles.makepost}>
-                
-                <Image  source={require('../assets/make_a_post.png')}></Image>
-            </View>
-            <Image  source={require('../assets/search.png')}></Image>
-            
+             <View style={styles.burgersection}>
+                <Pressable onPress={showAlert}>
+                    <Image style={styles.icon1} source={require('../assets/FakeBurgerMenu.png')}></Image>
+                </Pressable>
+             
+             </View>
+            <View style={styles.appname}>
+                <Pressable onPress={showAlert}>
+                <Text style={styles.textappname}>TEN</Text>
+                    </Pressable>
+                </View>
+            <View style={styles.newpost}>
+                <Pressable onPress={showAlert}>
+                    <Image style={styles.icon1} source={require('../assets/pluspost.png')}></Image>
+                    </Pressable>
+             </View>
+             <View style={styles.newpost}>
+             <Pressable onPress={showAlert}>
+                    <Image style={styles.icon2} source={require('../assets/bell.png')}></Image>
+                    </Pressable>
+             </View>
         </View>
     );
 }
@@ -21,28 +50,80 @@ function MenuBar(){
 const styles = StyleSheet.create({
     container:{
         height:64,
-        width:"100%",
+        // width:"100%",
         
         // borderBottomWidth:2,
         borderColor:"white",
         flexDirection:"row",
         alignItems:"center",
-        padding:5
-        
+        padding:10,
+        marginBottom:"30"
     },
     appname:{
         fontSize:22,
         color:"#ffffff",
         marginHorizontal:10,
-        width:"60%"
+        width:"53%"
     },
-    image:{
-        marginHorizontal:10,
-        height:45
+    textappname:{
+        fontSize:22,
+        color:"#ffffff",
     },
-    makepost:{
-        marginLeft:20
-    }
+    burgersection:{
+        width:30,
+        height:30,
+        // borderWidth:2,
+        flexDirection:"row",
+        // marginHorizontal:10,
+        resizeMode: 'contain',
+        borderRadius:100,
+        overflow: 'hidden',
+        alignItems:"center",
+        justifyContent:"center",
+        // paddingHorizontal:20
+        paddingTop:3,
+    },
+    burgermenu:{
+        height:30,
+        width:30,   
+        resizeMode:"contain"
+    },
+    newpost:{
+        width:60,
+        height:60,
+        // borderWidth:2,
+        flexDirection:"row",
+        // marginHorizontal:10,
+        resizeMode: 'contain',
+        borderRadius:100,
+        overflow: 'hidden',
+        alignItems:"center",
+        paddingHorizontal:20
+    },
+    icon1:{
+        height:30,
+        width:30,    
+
+      },
+      notifications:{
+        width:80,
+        height:60,
+        // borderWidth:2,
+        flexDirection:"row",
+        // marginHorizontal:10.,
+        marginRight:10,
+        resizeMode: 'contain',
+        borderRadius:100,
+        overflow: 'hidden',
+        alignItems:"center",
+        justifyContent:"center"
+      },
+      icon2:{
+        height:20,
+        width:20,
+      }
+
+
 })
 
 
