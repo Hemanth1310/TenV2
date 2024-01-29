@@ -5,15 +5,17 @@ import Post_Fetch from './Post_Fetch';
 import { LinearGradient } from 'expo-linear-gradient';
 import NotInterested from './NotInterested';
 import ReactionsPopUp from './ReactionPopUp';
-import { ReactionContainer } from './ReactionContainer';
-import { IgnoreComponent } from './IgnoreComponent';
 
 
 const ReadingJson = props => {
     const [isLoading, setLoading] = useState(false);
     const [users, setUsers] = useState([]);
     const [couter,setCounter] = useState([0]);
-    const [store,setStore] =useState([0]);
+    const [store,setStore] = useState([0]);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [reactComponent,setReactComponent] =useState(false);
+    const [skipVisible,setSkipVisible]=useState(false);
+    const [skipMessage,setSkipMessage]=useState([]);
 
     getUsers = () => {
         fetch('https://tenv1-44bcb-default-rtdb.firebaseio.com/user.json')
@@ -26,38 +28,58 @@ const ReadingJson = props => {
         setLoading(true);
         getUsers();
     }, []);
-    useEffect(() => {
-        if(store<5 && store!=0){
-        ToastAndroid.show(`You have ${5-store} skips left`, ToastAndroid.SHORT);
-        }
-    }, [store]);
+
     const deadend = () =>{
         Alert.alert('You’ve exhausted your skips!')
     }
 
     function onNext(index) {
       setCounter(index);
-    //   setReactComponent(!reactComponent)
+      setReactComponent(!reactComponent)
     }
 
+    const boxer = () => {
+        return(
+            <View style={styles.box}>
+                            <Pressable onPress={() => onNext(index + 1)}>
 
-    function ignoreIt(index){
-        setCounter(index)
+                            <Text>Hello</Text>
+                            </Pressable>
+
+                          </View>
+        )
     }
 
-    function storeCount(){
-        let x=parseInt(store)
-        // console.log(`pretest ${x}`)
-        x++;
-        // console.log(`test ${x}`)
-        if(x==5){
-            x=0;
-            setStore(x);
-            deadend();
+    const boxView = () =>{
+        // console.log("clicked")
+        setReactComponent(!reactComponent)
+    }
+    const delay = ms => new Promise(res => setTimeout(res, ms));
 
-        }else{
-            setStore(x)
+      async function onNotinterested(index,prestore){
+        setCounter(index);
+        let x= parseInt(prestore)
+
+        if (x==5)
+        {
+            setStore(0)
+            deadend()
         }
+        else{
+
+            // ToastAndroid.show(`You have ${4-x} skips left`, ToastAndroid.SHORT);
+            setSkipVisible(true)
+            setSkipMessage(`You have ${4-x} skips left`)
+            await delay(2000);
+            console.log("Waited 5 s")
+            setSkipVisible(false)
+            x++;
+            let y= String(x)
+            setStore(y)
+
+        }
+
+
     }
 
 
@@ -96,6 +118,11 @@ const ReadingJson = props => {
     return (
       <View>
         <View style={styles.container} key={Math.random().toString()}>
+           {skipVisible == true ?   <View style={styles.skips}>
+            <Text style={styles.skipText}>
+            {skipMessage}
+            </Text>
+          </View>:null}
           {/* {isLoading ? <Text>Loading...</Text> :
             (
                 <FlatList
@@ -148,14 +175,19 @@ const ReadingJson = props => {
                         <View style={{ position: "relative" }}>
                           {/* <Pressable onPress={() => onNext(index + 1)}> */}
 
-                          {/* { reactComponent == true ?(
+                         {/* { reactComponent == true ?(
                          <View style={styles.outer}>
                             {boxer}
                           </View>):null
                             } */}
-                          <ReactionContainer
-                            nextPost={() => onNext(index + 1)}
-                          ></ReactionContainer>
+                            {reactComponent == true ? <ReactionsPopUp moveOn={()=>onNext(index + 1)}></ReactionsPopUp> :null}
+                           
+                          <Pressable onPress={boxView}>
+                            <Image
+                              style={styles.reactions}
+                              source={require("../assets/FakeSmile.png")}
+                            ></Image>
+                          </Pressable>
                         </View>
                         <Pressable onPress={showAlert}>
                           <Image
@@ -166,17 +198,13 @@ const ReadingJson = props => {
                       </View>
                       <View style={styles.notinterested}>
                         <View></View>
-                        <IgnoreComponent onIgnore={() => ignoreIt(index + 1) } updateCount={storeCount} countStore={store}></IgnoreComponent>
-                        {/* <NotInterested></NotInterested> */}
-                        {/* <View>
-                          <Pressable
-                            onPress={() => onNotinterested(index + 1, store)}
-                          >
-                            <View style={styles.ignore}>
-                              <NotInterested></NotInterested>
-                            </View>
-                          </Pressable>
-                        </View> */}
+                        <Pressable
+                          onPress={() => onNotinterested(index + 1, store)}
+                        >
+                          <View style={styles.ignore}>
+                            <NotInterested></NotInterested>
+                          </View>
+                        </Pressable>
                       </View>
                     </View>
                   </View>
