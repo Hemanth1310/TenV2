@@ -5,40 +5,45 @@ export default function ReactionsPopUp (props){
       <View style={styles.box}>
         <Pressable onPress={props.moveOn}>
           <View style={styles.reactions}>
-            <Text style={styles.text}>Awesome!</Text>
-            <Image
+          <Image
               style={styles.image}
-              source={require("../assets/smile-white.png")}
+              source={require("../assets/Congratulations.png")}
             ></Image>
-          </View>
-        </Pressable>
-        <Pressable onPress={props.moveOn}>
-          <View style={styles.reactions}>
             <Text style={styles.text}>Congratulations!</Text>
-            <Image
+            
+          </View>
+        </Pressable>
+        <Pressable onPress={props.moveOn}>
+          <View style={styles.reactions}>
+          <Image
               style={styles.image}
-              source={require("../assets/smile-white.png")}
+              source={require("../assets/Cheers.png")}
             ></Image>
+            <Text style={styles.text}>Cheers!</Text>
+            
+          </View>
+        </Pressable>
+        
+
+        <Pressable onPress={props.moveOn}>
+          <View style={styles.reactions}>
+          <Image
+              style={styles.image}
+              source={require("../assets/Inspiring.png")}
+            ></Image>
+            <Text style={styles.text}>Inspiring!</Text>
+            
           </View>
         </Pressable>
 
         <Pressable onPress={props.moveOn}>
           <View style={styles.reactions}>
-            <Text style={styles.text}>Keep it up!</Text>
-            <Image
+          <Image
               style={styles.image}
-              source={require("../assets/smile-white.png")}
+              source={require("../assets/Love.png")}
             ></Image>
-          </View>
-        </Pressable>
-
-        <Pressable onPress={props.moveOn}>
-          <View style={styles.reactions}>
-            <Text style={styles.text}>Amazing!</Text>
-            <Image
-              style={styles.image}
-              source={require("../assets/smile-white.png")}
-            ></Image>
+            <Text style={styles.text}>Love It!</Text>
+            
           </View>
         </Pressable>
       </View>
@@ -56,12 +61,14 @@ const styles = StyleSheet.create({
     },
     box:{
         position:"absolute",
-        top:-200,
+        top:-205,
+        left:-5,
          height:200,
         width:210,
-        backgroundColor:"#4B6CB7",
+        backgroundColor:"#034978",
         flexDirection:"column",
         borderRadius:30,
+        paddingTop:10
         
     },
     reactions:{

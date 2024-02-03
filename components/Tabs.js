@@ -42,20 +42,26 @@ function Tabs(){
     return (
       <View style={styles.container}>
         <View style={styles.nav}>
-          <View style={styles.followtab}>
-            <Pressable >
-              {/* <Text style={styles.following_btn}>Following</Text> */}
-              <Text style={styles.textFollow}>Following</Text>
-            </Pressable>
+          <View style={styles.p1}>
+            <View style={styles.followtab}>
+              <Pressable>
+                {/* <Text style={styles.following_btn}>Following</Text> */}
+                <Text style={styles.textFollow}>Following</Text>
+              </Pressable>
+            </View>
+            <View style={styles.activetab}></View>
           </View>
+          <View style={styles.p2}>
           <View style={styles.discovertab}>
             <Pressable onPress={showAlert}>
               {/* <Text style={styles.following_btn}>Following</Text> */}
               <Text style={styles.textDiscover}>Discover</Text>
             </Pressable>
           </View>
+          {/* <View style={styles.deactivetab}></View> */}
+          </View>
 
-          <View></View>
+          {/* <View></View> */}
 
           {/* <Button title="Following"></Button>
             <Button title="Discover"></Button> */}
@@ -63,14 +69,14 @@ function Tabs(){
                 <Text style={styles.following_btn}>Discover</Text>
             </Pressable> */}
         </View>
-        <View style={styles.search}>
+        {/* <View style={styles.search}>
             <Pressable onPress={showAlert}>
           <Image
             style={styles.icon}
             source={require("../assets/finder.png")}
           ></Image>
           </Pressable>
-        </View>
+        </View> */}
         {/* 
             <View style={styles.newpost}>
             <Image style={styles.icon2} source={require('../assets/bell.png')}></Image>
@@ -90,67 +96,74 @@ const styles = StyleSheet.create({
         borderColor:"white",
         flexDirection:"row",
         alignItems:"center",
-        padding:8,
+        // padding:8,
         justifyContent:"space-between",
-        paddingHorizontal:5,
+        paddingHorizontal:20,
+        // marginLeft:15
         
     },
-    following_btn:{
-        color:"#000000",
-        fontSize:18,
-        borderColor:"#000000",
-        borderBottomWidth:2,
-        padding:10,
-        width:177,
-        borderRadius:8,
-        justifyContent:"center"
+
+    nav:{
+        flex:5,
+        // backgroundColor:"#F1F7FF",
+        // borderRadius:30,
+        height:45,
+        flexDirection:"row",
+        alignItems:"center",
+        borderBottomWidth:1,
+        borderBottomColor:"#ffffff"
+    },
+    p1:{
+        flex:1,
+        flexDirection:"column"
     },
     followtab:{
         alignItems:"center",
         flex:1,
-        backgroundColor:"#182848",
+        // backgroundColor:"#182848",
         height:45,
-        borderRadius:30,
-        justifyContent:"center"
+        // borderRadius:30,
+        justifyContent:"center",
+        // borderBottomWidth:3,
+        // borderBottomColor:"#ffffff",
+        // borderBottomStartRadius:30
+    },
+    activetab:{
+        backgroundColor:"#ffffff",
+        height:3,
+        borderRadius:10,
     },
     textFollow:{
         color:"#ffffff",
         // fontSize:16
         fontSize:16,
-        fontFamily:"Inter-Regular"
+        fontFamily:"Inter-Regular",
+        
+        
+    },
+    p2:{
+        flex:1,
+        flexDirection:"column"
     },
     discovertab:{
         alignItems:"center",
         flex:1,
         // backgroundColor:"#182848",
         height:45,
-        borderRadius:30,
+        // borderRadius:30,
         justifyContent:"center"
     },
     textDiscover:{
-        color:"#2E3B4C",
+        // color:"#2E3B4C",
+        color:"#ffffff",
         fontSize:16,
         fontFamily:"Inter-Regular"
     },
-    nav:{
-        flex:5,
-        backgroundColor:"#F1F7FF",
-        borderRadius:30,
-        height:45,
-        flexDirection:"row",
-        alignItems:"center"
+    deactivetab:{
+        backgroundColor:"#ffffff",
+        height:1,
+        borderRadius:10,
     },
-    search:{
-        height:60,
-        width:60,
-        overflow:"hidden",
-        flex:1
-    },
-    icon:{
-        height:45,
-        width:45,
-        resizeMode:"contain"
-    }
 
 });
 

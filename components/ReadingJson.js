@@ -16,7 +16,7 @@ const ReadingJson = props => {
     const [store,setStore] =useState([0]);
 
     getUsers = () => {
-        fetch('https://tenv1-44bcb-default-rtdb.firebaseio.com/user.json')
+        fetch('https://tenjson-cd580-default-rtdb.europe-west1.firebasedatabase.app/user.json')
           .then((response) => response.json())
           .then((json) => setUsers(json))
           .catch((error) => console.error(error))
@@ -292,6 +292,7 @@ const styles = StyleSheet.create({
     // borderWidth:2,
     flexDirection: "row",
     justifyContent: "space-around",
+    alignItems:"center"
     // paddingLeft:10,
   },
 

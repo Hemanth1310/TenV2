@@ -11,17 +11,18 @@ export default function App() {
       <View style={styles.container}>
         <StatusBar style="light"></StatusBar>
         <ImageBackground
-          source={require("./assets/Background.png")}
+          source={require("./assets/background12.png")}
           resizeMode="cover"
           style={styles.backImage}
         >
           <View style={styles.page}>
             <View style={styles.layout1}>
               <MenuBar></MenuBar>
+              <Tabs></Tabs>
             </View>
             <View style={styles.layout2}>
               <ScrollView style={styles.scrollView}>
-                <Tabs></Tabs>
+                {/* <Tabs></Tabs> */}
                 <ReadingJson></ReadingJson>
               </ScrollView>
             </View>
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
     flex: 1,
     // backgroundColor: '#fff',
     alignItems: 'center',
-    backgroundColor:'#182848',
+    backgroundColor:'#00224A',
     color:'#ffffff',
     // marginTop:28,
     paddingTop:28,

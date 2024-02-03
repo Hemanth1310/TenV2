@@ -25,7 +25,7 @@ export const ReactionContainer =(props)=>{
       <Pressable onPress={boxView}>
         <Image
           style={styles.reactions}
-          source={require("../assets/FakeSmile.png")}
+          source={require("../assets/Reaction-unclicked.png")}
         ></Image>
       </Pressable>
     </View>
@@ -34,8 +34,8 @@ export const ReactionContainer =(props)=>{
 
 const styles= StyleSheet.create({
     reactions: {
-        height: 52,
-        width: 52,
+        height: 28,
+        width: 28,
         resizeMode: "contain",
       },
 })

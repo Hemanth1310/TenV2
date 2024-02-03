@@ -32,20 +32,22 @@ function Post_Fetch(props) {
     <View style={styles.container} onLayout={onLayoutRootView}>
       <View style={styles.postdescription}>
         <View style={styles.titlesection}>
+        <View style={styles.tag}>
+            <Text style={styles.TextTag}>#{props.tag}</Text>
+          </View>
           <View style={styles.heading}>
             <Text style={styles.postTitle}>{props.title}</Text>
           </View>
-          <View style={styles.tag}>
-            <Text style={styles.TextTag}>{props.tag}</Text>
-          </View>
-        </View>
 
-        <View style={styles.postimage}>
-          <Image
-            style={styles.postpic}
-            source={{ uri: props.postImage }}
-          ></Image>
         </View>
+        {props.postImage == "" ? (<View></View>):(<View style={styles.postimage}>
+             <Image
+               style={styles.postpic}
+               source={{ uri: props.postImage }}
+             ></Image>
+           </View>)
+        }
+       
         <View style={styles.userinfo}>
           <View style={styles.infoSection}>
             <View style={styles.profilepic}>
@@ -84,15 +86,15 @@ const styles = StyleSheet.create({
     },
 
     titlesection:{
-        flexDirection:"row",
-        alignItems:"center",
+        flexDirection:"column",
+        // alignItems:"center",
         marginBottom:15,
     },
     heading:{
         flex:3,
         // alignItems:"center",
         justifyContent:"center",
-        paddingHorizontal:10
+        paddingHorizontal:5
     },
     postTitle:{
         fontSize:20,
@@ -105,16 +107,16 @@ const styles = StyleSheet.create({
     },
     tag:{
         // flex:1,
-        backgroundColor:"#4B6CB7",
+        // backgroundColor:"#4B6CB7",
         height:28,
         paddingVertical:5,
         paddingHorizontal:10,
         borderRadius:28,
-        alignItems:"center",
+        // alignItems:"center",
         justifyContent:"center"
     },
     TextTag:{
-        color:"#ffffff",
+        color:"#3C3C3C",
         fontSize:12,
         fontFamily:"Inter-Regular"
     },
