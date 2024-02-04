@@ -8,68 +8,73 @@ import Test from './components/Test'
 export default function App() {
   return (
     <>
-     <StatusBar style="light"></StatusBar>
-    <View style={styles.container}>
-   
-     
-     
-      {/* <Tabs></Tabs>
-      <ScrollView  style={styles.scrollView} > 
-      <Post_container></Post_container>
-      </ScrollView> */}
-     
-      <ImageBackground source={require("./assets/Mesh-Gradient.png")} resizeMode="cover" style={styles.backImage}>
-      <ImageBackground source={require("./assets/Noise.png")} resizeMode="cover" style={styles.backImage}>
-      <MenuBar ></MenuBar >
-      <Tabs></Tabs>
-      </ImageBackground>
-      </ImageBackground>
-      <ImageBackground source={require("./assets/Noise.png")} resizeMode="cover" style={styles.backImage}>
-      <ScrollView  style={styles.scrollView} > 
-      
-      <ReadingJson></ReadingJson>
-      </ScrollView>
-      </ImageBackground>
-      {/* <Test></Test>
-      <Text style={styles.text}>Hello</Text> */}
-    </View>
-   
+      <View style={styles.container}>
+        <StatusBar style="light"></StatusBar>
+        <ImageBackground
+          source={require("./assets/background12.png")}
+          resizeMode="cover"
+          style={styles.backImage}
+        >
+          <View style={styles.page}>
+            <View style={styles.layout1}>
+              <MenuBar></MenuBar>
+              <Tabs></Tabs>
+            </View>
+            <View style={styles.layout2}>
+              <ScrollView style={styles.scrollView}>
+                {/* <Tabs></Tabs> */}
+                <ReadingJson></ReadingJson>
+              </ScrollView>
+            </View>
+          </View>
+        </ImageBackground>
+      </View>
     </>
   );
 }
 
 const styles = StyleSheet.create({
   scrollView:{
-    width:"100%",
+    // width:"100%",
+    // flex:1,
     
   },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
     alignItems: 'center',
-    backgroundColor:'#151515',
+    backgroundColor:'#00224A',
     color:'#ffffff',
     // marginTop:28,
     paddingTop:28,
     flexDirection:"column",
     width:"100%",
-    paddingBottom:10,
+    // paddingBottom:10,
     height:"100%"
+  },
+  page:{
+    flexDirection:"column",
+   
+  },
+  layout1:{
+    marginBottom:10
+  },
+  layout2:{
+    backgroundColor:"#ffffff",
+    flex:1,
+    // borderRadius:30,
+    // borderBottomStartRadius:30,
+    borderTopEndRadius:30,
+    borderTopStartRadius:30,
+    padding:5,
   },
   image:{
     height:90,
     width:200
   },
   backImage:{
-    height:"auto",
-    width:"100%",
-    resizeMode: "contain",
-    overflow: 'hidden'
-    
-  },
-  Noise:{
-    height:"auto",
-    width:"100%",
+    width: null,
+    height: null,
     resizeMode: "contain",
     overflow: 'hidden'
     
