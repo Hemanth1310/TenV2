@@ -12,7 +12,7 @@ export const IgnoreComponent =(props) =>{
     const [skipMessage,setSkipMessage]=useState([]);
 
     const deadend = () =>{
-        Alert.alert('You’ve exhausted your skips!')
+        Alert.alert('Slow Down! Make sure You read the Posts')
     }
 
     const delay = ms => new Promise(res => setTimeout(res, ms));

@@ -48,9 +48,11 @@ const styles = StyleSheet.create({
     // marginTop:28,
     paddingTop:28,
     flexDirection:"column",
-    width:"100%",
+    minWidth:374,
+    // width:374,
+    // width:"100%",
     // paddingBottom:10,
-    height:"100%"
+    height:"100%",
   },
   page:{
     flexDirection:"column",
@@ -67,6 +69,7 @@ const styles = StyleSheet.create({
     borderTopEndRadius:30,
     borderTopStartRadius:30,
     padding:5,
+    minWidth:374,
   },
   image:{
     height:90,

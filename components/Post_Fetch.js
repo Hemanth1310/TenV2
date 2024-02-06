@@ -46,7 +46,7 @@ function Post_Fetch(props) {
                source={{ uri: props.postImage }}
              ></Image>
            </View>)
-        }
+        } 
        
         <View style={styles.userinfo}>
           <View style={styles.infoSection}>

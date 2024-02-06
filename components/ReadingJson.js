@@ -14,9 +14,10 @@ const ReadingJson = props => {
     const [users, setUsers] = useState([]);
     const [couter,setCounter] = useState([0]);
     const [store,setStore] =useState([0]);
+    const [record,setRecord]=useState(0);
 
     getUsers = () => {
-        fetch('https://tenjson-cd580-default-rtdb.europe-west1.firebasedatabase.app/user.json')
+        fetch('https://tenoo-2854a-default-rtdb.europe-west1.firebasedatabase.app/user.json')
           .then((response) => response.json())
           .then((json) => setUsers(json))
           .catch((error) => console.error(error))
@@ -37,12 +38,14 @@ const ReadingJson = props => {
 
     function onNext(index) {
       setCounter(index);
+      setRecord(record+1)
     //   setReactComponent(!reactComponent)
     }
 
 
     function ignoreIt(index){
         setCounter(index)
+        setRecord(record+1)
     }
 
     function storeCount(){
@@ -184,6 +187,18 @@ const ReadingJson = props => {
               ) : null}
             </View>
           ))}
+
+{record == 30 ? (
+                  <View>
+                  <View style={{alignItems:"center",justifyContent:"center",marginTop:200,width:374}} key={Math.random().toString()}>
+                    <Text>Thanks for participation</Text>
+                    
+                    {/* <Text>The Name is:{name}</Text> */}
+                  </View>
+                  
+                  </View>
+                ) : null}
+
         </View>
       </View>
     );
