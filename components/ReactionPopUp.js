@@ -3,6 +3,16 @@ import { Text,Image,StyleSheet,View, Pressable } from "react-native";
 export default function ReactionsPopUp (props){
     return (
       <View style={styles.box}>
+           <Pressable onPress={props.moveOn}>
+          <View style={styles.reactions}>
+          <Image
+              style={styles.image}
+              source={require("../assets/Like.png")}
+            ></Image>
+            <Text style={styles.text}>Like</Text>
+            
+          </View>
+        </Pressable>
         <Pressable onPress={props.moveOn}>
           <View style={styles.reactions}>
           <Image
@@ -13,16 +23,7 @@ export default function ReactionsPopUp (props){
             
           </View>
         </Pressable>
-        <Pressable onPress={props.moveOn}>
-          <View style={styles.reactions}>
-          <Image
-              style={styles.image}
-              source={require("../assets/Cheers.png")}
-            ></Image>
-            <Text style={styles.text}>Cheers!</Text>
-            
-          </View>
-        </Pressable>
+     
         
 
         <Pressable onPress={props.moveOn}>
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
         flexDirection:"row",
         alignItems:"center",
         paddingHorizontal:15,
-        justifyContent:"space-between",
+        // justifyContent:"space-between",
         // marginBottom:10,
         padding:10,
         // borderWidth:2,
@@ -88,7 +89,8 @@ const styles = StyleSheet.create({
     },
     text:{
         fontSize:16,
-        color:"#ffffff"
+        color:"#ffffff",
+        paddingHorizontal:10
         //  paddingHorizontal:15,
     }
 

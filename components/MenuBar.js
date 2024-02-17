@@ -36,7 +36,7 @@ function MenuBar(){
           </Pressable>
         </View>
         </View>
-        <View style={styles.p2}>
+        {/* <View style={styles.p2}>
         <View style={styles.finder}>
           <Pressable onPress={showAlert}>
             <Image
@@ -61,7 +61,7 @@ function MenuBar(){
             ></Image>
           </Pressable>
         </View>
-        </View>
+        </View> */}
       </View>
     );
 }

@@ -15,6 +15,7 @@ const ReadingJson = props => {
     const [couter,setCounter] = useState([0]);
     const [store,setStore] =useState([0]);
     const [record,setRecord]=useState(0);
+    const [followState,onfollowingState] = useState('Unfollow')
 
     getUsers = () => {
         fetch('https://tenoo-2854a-default-rtdb.europe-west1.firebasedatabase.app/user.json')
@@ -27,13 +28,13 @@ const ReadingJson = props => {
         setLoading(true);
         getUsers();
     }, []);
-    useEffect(() => {
-        if(store<5 && store!=0){
-        ToastAndroid.show(`You have ${5-store} skips left`, ToastAndroid.SHORT);
-        }
-    }, [store]);
+    // useEffect(() => {
+    //     if(store<5 && store!=0){
+    //     ToastAndroid.show(`You have ${5-store} skips left`, ToastAndroid.SHORT);
+    //     }
+    // }, [store]);
     const deadend = () =>{
-        Alert.alert('You’ve exhausted your skips!')
+        Alert.alert('Hey! you are going to fast, Please take it easy')
     }
 
     function onNext(index) {
@@ -63,6 +64,18 @@ const ReadingJson = props => {
         }
     }
 
+    const followChange=()=>{
+        console.log({followState})
+        var stateCatch
+        if(followState=='Unfollow'){
+            // onfollowingState('Follow')
+
+            stateCatch='Follow'
+        }else{
+            stateCatch='Unfollow'
+        }
+        onfollowingState(stateCatch)
+      }
 
     const skipable = () =>{
         return (
@@ -125,10 +138,12 @@ const ReadingJson = props => {
                       tag={data.posts[0].category}
                       onNext={onNext}
                       unfo={showAlert}
+                      followState={followState}
+                      changeFo={followChange}
                     ></Post_Fetch>
                   </View>
                   <View style={styles.expandDiv}>
-                    <View style={styles.savelater}>
+                    {/* <View style={styles.savelater}>
                       <Pressable onPress={showAlert}>
                         <View style={styles.saveSection}>
                           <Image
@@ -145,7 +160,7 @@ const ReadingJson = props => {
                           ></Image>
                         </View>
                       </Pressable>
-                    </View>
+                    </View> */}
                     <View style={styles.bottomtabs}>
                       <View style={styles.interested}>
                         <View style={{ position: "relative" }}>
@@ -160,12 +175,13 @@ const ReadingJson = props => {
                             nextPost={() => onNext(index + 1)}
                           ></ReactionContainer>
                         </View>
-                        <Pressable onPress={showAlert}>
+                        {/* Change here  */}
+                        {/* <Pressable onPress={showAlert}>
                           <Image
                             style={styles.reactions}
                             source={require("../assets/FakeComments.png")}
                           ></Image>
-                        </Pressable>
+                        </Pressable> */}
                       </View>
                       <View style={styles.notinterested}>
                         <View></View>
@@ -188,10 +204,10 @@ const ReadingJson = props => {
             </View>
           ))}
 
-{record == 30 ? (
+                {record == 30 ? (
                   <View>
                   <View style={{alignItems:"center",justifyContent:"center",marginTop:200,width:374}} key={Math.random().toString()}>
-                    <Text>Thanks for participation</Text>
+                    <Text style={{fontSize:22}}>Thanks for participation</Text>
                     
                     {/* <Text>The Name is:{name}</Text> */}
                   </View>
@@ -299,16 +315,21 @@ const styles = StyleSheet.create({
     // padding:10,
     flexDirection: "row",
     alignItems: "center",
+    justifyContent:"flex-start"
     // justifyContent:"space-between",
     // backgroundColor:"linear-gradient(180deg, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.10) 100%);",
   },
   interested: {
     flex: 1,
     // borderWidth:2,
+    paddingLeft:20,
     flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems:"center"
+    // justifyContent: "space-around",
+    // alignItems:"flex-end"
+    alignItems:"center",
     // paddingLeft:10,
+    // height:45,
+    // width:45
   },
 
   ignore: {

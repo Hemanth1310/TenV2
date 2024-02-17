@@ -1,5 +1,5 @@
 import {  StyleSheet, Text, View, Image, Pressable,Alert, Modal } from "react-native";
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback } from 'react';
@@ -27,6 +27,11 @@ function Post_Fetch(props) {
       if (!fontsLoaded) {
         return null;
       }
+
+    //   const [followState,onfollowingState] = useState('Unfollow')
+      
+
+    
 
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
@@ -63,11 +68,12 @@ function Post_Fetch(props) {
           </View>
           <View style={styles.actions}>
           
-            <Pressable onPress={props.unfo}>
+            {/* <Pressable onPress={props.unfo}> */}
+            {/* <Pressable onPress={props.changeFo}>
             <View style={styles.unfollowBtn}>
-                <Text style={styles.unfollow}>Unfollow</Text>
+                <Text style={styles.unfollow}>{props.followState}</Text>
                 </View>
-            </Pressable>
+            </Pressable> */}
             
             <Image source={require("../assets/3dots.png")}></Image>
           </View>
@@ -183,7 +189,7 @@ const styles = StyleSheet.create({
     unfollowBtn:{
         borderRadius:30,
         borderColor:"#182848",
-        borderWidth:2,
+        // borderWidth:2,
         padding:5,
         // marginLeft:30,
     },
